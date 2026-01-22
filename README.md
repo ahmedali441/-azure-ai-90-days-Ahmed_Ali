@@ -42,4 +42,33 @@ Week 9-12: Real-World Projects & Deployment
 - **Azure Services**: ML Studio, Cognitive Services, OpenAI, Storage
 - **Tools**: Git, VS Code, Jupyter Notebooks
 - **Deployment**: Docker, Azure Web Apps, GitHub Actions
-- 
+
+
+  
+## 🗓️ Week 1 Projects
+| Day | Project Name | Description | Status |
+|-----|-------------|-------------|--------|
+| 1 | Data Cleaner | Clean and validate CSV files | 🔄 In Progress |
+| 2 | API Fetcher | Get data from REST APIs | 📅 Planned |
+| 3 | Data Analyzer | Analyze datasets with Pandas | 📅 Planned |
+| 4 | Basic ML Model | Train first ML model | 📅 Planned |
+| 5 | Data Visualizer | Create charts and plots | 📅 Planned |
+| 6 | File Organizer | Automate file management | 📅 Planned |
+| 7 | Review Day | Review and document learnings | 📅 Planned |
+
+## 🚀 How to Use This Repository
+1. Each day I'll create a new project folder
+2. Every project includes:
+   - Working Python code
+   - Documentation
+   - Sample data
+   - Tests
+3. I commit daily to track progress
+
+## 🔗 Connect With Me
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin)](https://linkedin.com/in/YOUR_PROFILE)
+[![Email](https://img.shields.io/badge/Email-Contact-red?logo=gmail)](mailto:YOUR_EMAIL)
+
+---
+
+*"The journey of a thousand miles begins with a single commit." - GitHub Proverb*
