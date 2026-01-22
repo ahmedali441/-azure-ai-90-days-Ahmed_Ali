@@ -66,8 +66,8 @@ Week 9-12: Real-World Projects & Deployment
 3. I commit daily to track progress
 
 ## 🔗 Connect With Me
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin)](https://linkedin.com/in/YOUR_PROFILE)
-[![Email](https://img.shields.io/badge/Email-Contact-red?logo=gmail)](mailto:YOUR_EMAIL)
+[![www.linkedin.com/in/ahmed-a-ali-152a308b](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin)](https://linkedin.com/in/YOUR_PROFILE)
+[![Ahmed111761177@gmail.com](https://img.shields.io/badge/Email-Contact-red?logo=gmail)](mailto:YOUR_EMAIL)
 
 ---
 
