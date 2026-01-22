@@ -72,3 +72,11 @@ Week 9-12: Real-World Projects & Deployment
 ---
 
 *"The journey of a thousand miles begins with a single commit." - GitHub Proverb*
+
+## 📅 Complete 90-Day Plan
+👉 [View detailed day-by-day plan](/docs/90-day-plan.md)
+
+## 🗓️ Today's Project
+**Day 1: Data Cleaner**
+- Status: 🔄 In Progress
+- [View project folder](/projects/day-01-data-cleaner)
