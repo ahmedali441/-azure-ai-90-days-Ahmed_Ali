@@ -48,7 +48,7 @@ Week 9-12: Real-World Projects & Deployment
 ## 🗓️ Week 1 Projects
 | Day | Project Name | Description | Status |
 |-----|-------------|-------------|--------|
-| 1 | Data Cleaner | Clean and validate CSV files | 🔄 In Progress |
+| 1 | Data Cleaner | Clean and validate CSV files |✅completed |
 | 2 | API Fetcher | Get data from REST APIs | 📅 Planned |
 | 3 | Data Analyzer | Analyze datasets with Pandas | 📅 Planned |
 | 4 | Basic ML Model | Train first ML model | 📅 Planned |
