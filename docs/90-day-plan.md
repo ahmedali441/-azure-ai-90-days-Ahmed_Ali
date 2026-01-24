@@ -11,7 +11,7 @@
 ### Week 1: Python & Data Foundations (Days 1-7)
 | Day | Project | Focus | Status |
 |-----|---------|-------|--------|
-| 1 | Data Cleaner | CSV cleaning & validation | 📅 Planned |
+| 1 | Data Cleaner | CSV cleaning & validation | ✅ COMPLETED |
 | 2 | API Data Fetcher | REST APIs with requests | 📅 Planned |
 | 3 | Data Analyzer | Pandas analysis | 📅 Planned |
 | 4 | Basic ML Model | Scikit-learn introduction | 📅 Planned |
