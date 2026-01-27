@@ -12,8 +12,8 @@
 | Day | Project | Focus | Status |
 |-----|---------|-------|--------|
 | 1 | Data Cleaner | CSV cleaning & validation | ✅ COMPLETED |
-| 2 | API Data Fetcher | REST APIs with requests | 📅 Planned |
-| 3 | Data Analyzer | Pandas analysis | 📅 Planned |
+| 2 | API Data Fetcher | REST APIs with requests | ✅ COMPLETED |
+| 3 | Data Analyzer | Pandas analysis | ✅ COMPLETED |
 | 4 | Basic ML Model | Scikit-learn introduction | 📅 Planned |
 | 5 | Data Visualizer | Matplotlib charts | 📅 Planned |
 | 6 | File Organizer | OS automation | 📅 Planned |
