@@ -1,1 +1,213 @@
+🧪 Phase-1 PRACTICAL TOPICS (Azure Portal)
+When you decide to start labs, Phase-1 hands-on should include:
+________________________________________
+🔵 Lab 1 — Create Azure OpenAI Resource
+•	Create resource
+•	Region selection
+•	RBAC
+•	Disable public access (optional advanced)
+•	Deploy GPT model
+•	Deploy embedding model
+________________________________________
+________________________________________
+📋 Summary — Phase-1 Practicals Cover:
+✅ Deployment
+✅ Prompt tuning
+✅ Cost tracking
+✅ Embeddings
+✅ RAG basics
+✅ Security
+✅ Monitoring
+✅ Safety
+________________________________________
+________________________________________
+🔵 Lab 1 — Create Azure OpenAI Resource
+•	Create resource
+•	Region selection
+•	RBAC
+•	Disable public access (optional advanced)
+•	Deploy GPT model
+•	Deploy embedding model
+
+
+
+🔥 Let’s go, Ahmed. Phase-1 Practical Day-1 = Enterprise-grade Azure OpenAI foundation.
+Today is governance + security + cost + logging first — before any fancy RAG or prompts.
+This is exactly how real production systems start.
+You’ll document each step in:
+✅ Notebook
+✅ GitHub repo (architecture + screenshots + configs)
+________________________________________
+🎯 Phase-1 Practical — Day 1 Goal
+By the end of today you will have:
+✔ Azure OpenAI resource created
+✔ RBAC + Managed Identity ready
+✔ Public network disabled
+✔ Tagging strategy applied
+✔ Cost budgets + alerts
+✔ Diagnostic logs enabled
+✔ Quota awareness
+✔ Architecture diagram documented
+________________________________________
+🧱 PART 1 — Resource Creation (Controlled)
+Step 1 — Create Azure OpenAI Resource
+Portal → Create Resource
+Fill:
+Field	Value
+Resource Group	rg-genai-prod-lab
+Name	aoai-churn-lab
+Region	choose EAST-US2
+Pricing tier	Standard
+Network	Public for now (we’ll lock later)
+👉 Notebook:
+•	Region
+•	Resource name
+•	RG name
+•	Why same region = latency + cost
+________________________________________
+________________________________________
+🔐 PART 2 — Identity & RBAC (NO API KEYS)
+Step 2 — Assign RBAC
+Go to resource → Access control (IAM) → Add role assignment:
+Add:
+Role	To
+Cognitive Services OpenAI User	your user
+Cognitive Services Contributor
+yourself (lab only)
+Later prod = Managed Identity.
+👉 Notebook:
+•	Why RBAC > API keys
+•	Least privilege
+•	Prod apps = managed identity
+________________________________________
+________________________________________
+🌐 PART 3 — Lock Down Networking
+Step 3 — Disable Public Access
+Resource → Networking:
+•	❌ Public network access → Disabled
+•	Save
+(If portal forces endpoint creation later — fine.)
+👉 Notebook:
+•	Why private networking
+•	Regulated workloads
+•	Data exfiltration prevention
+________________________________________
+________________________________________
+🏷️ PART 4 — Tagging Strategy
+Step 4 — Add Tags
+Resource → Tags:
+env = lab
+owner = ahmed
+costcenter = ai102
+workload = genai
+👉 Notebook:
+•	Why tags matter
+•	Governance
+•	Cost tracking
+•	Policy enforcement
+________________________________________
+________________________________________
+💸 PART 5 — Cost Budgets & Alerts
+Step 5 — Create Budget
+Portal → Cost Management → Budgets → Create:
+Setting	Value
+Scope	Resource Group
+Amount	$10
+Alert	80% + 100%
+Email	yours
+👉 Notebook:
+•	Token explosion risk
+•	Budgets stop surprises
+•	Prod always uses alerts
+________________________________________
+________________________________________
+📊 PART 6 — Logging & Observability
+Step 6 — Diagnostic Settings
+Azure OpenAI → Diagnostic settings → Add:
+Send to:
+☑ Log Analytics workspace
+☑ Metrics
+☑ Audit logs
+☑ Request logs
+Create new workspace:
+law-genai-monitoring
+👉 Notebook:
+•	What gets logged
+•	Security teams use logs
+•	Cost tracking
+•	Abuse detection
+________________________________________
+________________________________________
+📦 PART 7 — Quotas & Capacity
+Step 7 — Check Quotas(Metrics):
+Metrics = what you USED
+Quotas = what you’re ALLOWED to use.
+Portal → Azure OpenAI → Quotas
+Note:
+•	Tokens per minute
+•	Requests per minute
+•	Region limits
+👉 Notebook:
+•	Why quotas exist
+•	Prevent runaway apps
+•	Throughput planning
+________________________________________
+________________________________________
+🧭 PART 8 — Architecture Diagram (GitHub)
+In your GitHub repo create:
+phase-1-azure-openai/
+ ├── day1-foundation.md
+ ├── architecture.png
+ └── notes.md
+Architecture to draw:
+App
+ ↓
+API Gateway
+ ↓
+Azure OpenAI (Private Endpoint)
+ ↓
+Log Analytics
+ ↓
+Cost Management + Alerts
+👉 Notebook:
+•	AI Gateway pattern
+•	Separation of concerns
+•	Security layers
+________________________________________
+________________________________________
+📋 CHECKPOINT — Before Moving On:
+Confirm you have:
+✅ Resource created
+✅ RBAC roles
+✅ Public disabled
+✅ Tags
+✅ Budget
+✅ Logs
+✅ Quotas viewed
+✅ Repo structure
+________________________________________
+🧠 Mini-Questions (write answers in notebook)
+1️⃣ Why create budgets before deployments?
+control cost.
+2️⃣ Why disable public access early?
+managed identity + private endpoint ✔️
+Correct — also prevents data exfiltration.
+3️⃣ Why log prompts in enterprise?
+ oversight ✔️
+Right — plus audit, abuse detection, legal review.
+4️⃣ Why tags are mandatory in orgs?
+team & resource ownership ✔️
+Correct — plus chargeback + governance.
+
+5️⃣ Why quotas matter for RAG later?
+Your answer: controls tokens & cost ✔️
+Spot-on. Also throttling protection.
+
+________________________________________
+________________________________________
+When done, reply with:
+• ✅ completed / where stuck
+• screenshot optional
+• budget amount
+• region used
 
