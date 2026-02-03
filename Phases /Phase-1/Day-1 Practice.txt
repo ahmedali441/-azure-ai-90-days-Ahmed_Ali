@@ -153,12 +153,8 @@ Note:
 •	Throughput planning
 ________________________________________
 ________________________________________
-🧭 PART 8 — Architecture Diagram (GitHub)
-In your GitHub repo create:
-phase-1-azure-openai/
- ├── day1-foundation.md
- ├── architecture.png
- └── notes.md
+🧭 PART 8 — Architecture Diagram:
+
 Architecture to draw:
 App
  ↓
@@ -175,7 +171,7 @@ Cost Management + Alerts
 •	Security layers
 ________________________________________
 ________________________________________
-📋 CHECKPOINT — Before Moving On:
+📋 CHECKPOINT —:
 Confirm you have:
 ✅ Resource created
 ✅ RBAC roles
@@ -200,14 +196,10 @@ team & resource ownership ✔️
 Correct — plus chargeback + governance.
 
 5️⃣ Why quotas matter for RAG later?
-Your answer: controls tokens & cost ✔️
+ controls tokens & cost ✔️
 Spot-on. Also throttling protection.
 
 ________________________________________
 ________________________________________
-When done, reply with:
-• ✅ completed / where stuck
-• screenshot optional
-• budget amount
-• region used
+
 
