@@ -1,1 +1,115 @@
+🔵 Lab 2 — Playground Basics
+•	Chat playground
+•	System vs user messages
+•	Temperature
+•	Max tokens
+•	Frequency penalty
+•	Test deterministic vs creative
+
+
+
+Phase-1 Day-2 = first real deployments — but we’ll do it controlled, cheap, and enterprise-style.
+Today’s scope:
+✅ Create chat deployment
+✅ Create embedding deployment
+✅ Test safely in Playground
+✅ Watch token metrics
+✅ Stop compute afterward
+No RAG yet. No Search yet. No Prompt Flow yet.
+________________________________________
+🔵 Step 1 — Go to the RIGHT place
+In Azure Portal:
+➡️ Open your Azure OpenAI resource
+➡️ Click Deployments (left menu)
+➡️ Press ➕ Create deployment
+⚠️ Do NOT use Foundry / AI Studio yet — we stay inside the resource.
+________________________________________
+🟢 Step 2 — Create CHAT Deployment
+Click Create deployment:
+Fill:
+Deployment name
+chat-gpt4o-mini
+Model
+→ choose a chat model (GPT-4o-mini / GPT-35 / similar)
+Version
+→ latest
+Scale
+→ default
+Tokens per minute
+→ default
+Press Create.
+⏳ Wait until status = Succeeded.
+________________________________________
+🟡 Step 3 — Create EMBEDDING Deployment
+Again:
+➡️ Create deployment
+Fill:
+Deployment name
+embeddings-small
+Model
+→ text-embedding-3-small (or equivalent)
+Version
+→ latest
+Press Create.
+________________________________________
+🎯 At this point you MUST have:
+Two deployments:
+• chat-gpt4o-mini
+• embeddings-small
+Stop here and confirm they show Succeeded.
+________________________________________
+🧪 Step 4 — Test CHAT in Playground
+Inside Azure OpenAI:
+➡️ Go to Playground → Chat
+Select deployment:
+👉 chat-gpt4o-mini
+System message
+You are a strict financial analyst. Answer only in bullet points.
+User
+Explain why customer churn is expensive.
+👉 Run it.
+✍️ Write in notebook:
+•	How style changed
+•	Format enforced?
+________________________________________
+________________________________________
+🧪 Step-5 — Temperature Experiment
+Run same prompt:
+Temp	Expected
+0.1	Deterministic
+0.7	Balanced
+1.2	Creative
+Change temperature slider → run 3 times.
+✍️ Note:
+•	Which varies most?
+•	Which is best for churn prediction apps?
+________________________________________
+________________________________________
+🧪 Step-6 — Max Tokens
+Set:
+• Max tokens = 50
+• Run
+Then:
+• Max tokens = 400
+• Run again
+✍️ Note:
+•	Output length difference
+•	Cost implication?
+________________________________________
+________________________________________
+🧪 Step-7 — Frequency Penalty (reduce the repetition of the sentences)
+Prompt:
+List three reasons churn increases.
+Try:
+• freq penalty = 0
+• freq penalty = 1
+✍️ Observe repetition reduction.
+________________________________________
+________________________________________
+✅ Lab-2 completed
+
+
+
+Next..
+Lab 3 — Token Usage & Cost
 
