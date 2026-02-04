@@ -145,7 +145,7 @@ So:
 🔥 LLM inference dominates cost in production, not embeddings.
 
 ________________________________________
-When ready we continue with:
+Next ..Day-5:
 👉 🔵 Lab-5 — RAG Lite (Manual)
 (chunking + overlap + grounding).
 This is where it gets 🔥.
