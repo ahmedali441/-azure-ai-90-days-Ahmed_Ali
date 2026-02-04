@@ -1,1 +1,107 @@
+🔵 Lab 3 — Token Usage & Cost
+•	View metrics
+•	Tokens per request
+•	Cost analysis
+•	Budgets + alerts
+
+
+This lab is 100% enterprise-critical and shows up a lot in AI-102 thinking.
+We’ll cover:
+✅ Where tokens appear
+✅ How to see usage
+✅ Cost analysis
+✅ Budgets & alerts
+✅ Per-deployment monitoring
+Slow + clean 👇
+________________________________________
+🧪 Lab-3 Step-by-Step
+________________________________________
+🔵 Step 1 — Generate Some Traffic
+In Chat Playground, run a few prompts:
+Short one:
+What is churn?
+Long one:
+Explain in detail why telecom companies suffer from churn and list 5 mitigation strategies.
+Run each multiple times.
+👉 This creates token usage for us to inspect.
+________________________________________
+________________________________________
+🔵 Step 2 — View Token Metrics
+Go to:
+Azure Portal → Your Azure OpenAI resource → Monitoring → Metrics
+Add metrics:
+• Processed Prompt Tokens
+• Generated Completion Tokens
+• Total Tokens
+Set:
+• Scope = last 30 minutes
+• Aggregation = Sum
+You should now see graphs moving 📈
+________________________________________
+________________________________________
+🔵 Step 3 — Per-Deployment Usage
+Still in Metrics:
+Change Split by → Deployment name
+Now you can see:
+✔ Chat model usage
+✔ Embedding model usage
+✔ Which one costs more
+This is very exam-relevant.
+________________________________________
+________________________________________
+🔵 Step 4 — Cost Analysis
+Go to:
+Azure Portal → Cost Management + Billing → Cost analysis
+Filter:
+• Resource = your Azure OpenAI resource
+• Or Resource group
+View:
+• Daily cost
+• Accumulated cost
+• Service name = Azure OpenAI
+________________________________________
+________________________________________
+🔵 Step 5 — Create Budget + Alert
+Go to:
+Cost Management → Budgets → Add
+Create:
+• Name: openai-monthly-cap
+• Amount: something small (ex: $10)
+• Scope = resource group
+• Alert at 50% and 80%
+📌 This is what enterprises do before production.
+________________________________________
+________________________________________
+🔵 Step 6 — What REALLY Drives Cost?
+Run same prompt but:
+• Max tokens = 300
+• Then Max tokens = 50
+Look at token charts again.
+You should observe:
+👉 Smaller max tokens → cheaper
+👉 Longer prompt → more prompt tokens
+👉 Higher Top-K in RAG later → more tokens
+👉 Embeddings cost per chunk
+________________________________________
+________________________________________
+🧠 Mini-Checkpoint (Answer quickly)
+1️⃣ Which is more expensive: prompt tokens or completion tokens?
+✔ Both prompt + completion cost money
+👉 Usually completion tokens dominate in chat-heavy apps.
+
+2️⃣ Which deployment consumed more so far: chat or embedding?
+✔ Chat almost always > embeddings in testing.
+
+3️⃣ Does temperature change token count directly?
+✔ Correct — NO direct effect.
+👉 Output length + max tokens do.
+
+4️⃣ What setting limits runaway output cost?
+✔ Max tokens = primary control.
+⚠ Frequency / presence penalties affect style, not cost much.
+________________________________________
+________________________________________
+⏭️ Next Lab:
+👉 🔵 Lab-4 — Embeddings + Simple Vector Store
+
 
