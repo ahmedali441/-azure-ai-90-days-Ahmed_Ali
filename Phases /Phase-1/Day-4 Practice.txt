@@ -95,14 +95,6 @@ You implemented:
 ✔ RAG core logic
 ________________________________________
 
-
-
-
-
-
-
-
-
 🧠 Mini Homework (answer before Lab-5)
 Reply with:
 1️⃣ Why do we embed docs once but queries every time?
