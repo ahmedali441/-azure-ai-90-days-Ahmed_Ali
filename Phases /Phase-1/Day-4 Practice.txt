@@ -1,1 +1,251 @@
+🔵 Lab 4 — Embeddings + Simple Vector Store
+•	Generate embeddings
+•	Store vectors
+•	Similarity search
+•	Manual Top-K experiments
+
+
+This lab teaches the core of RAG before Azure AI Search:
+👉 Convert text → vectors → store → similarity search → retrieve Top-K.
+No portals chaos. Very controlled.
+________________________________________
+🧪 Lab-4 — Embeddings + Simple Vector Store
+🎯 Goals
+By end of this lab you will:
+✔ Generate embeddings
+✔ Store vectors manually
+✔ Compute similarity
+✔ Tune Top-K
+✔ See cost + relevance tradeoffs
+________________________________________
+🧭 Architecture for this lab
+Text → Embedding model → Vector list (memory/file)
+Query → Embedding → Similarity → Top-K chunks
+No search service yet.
+________________________________________
+✅ STEP 1 — Pick your embedding deployment
+In Azure OpenAI:
+You should already have:
+• One chat deployment
+• One embedding deployment
+We use the embedding one here.
+________________________________________
+✅ STEP 2 — Sample documents
+Use 3–5 short docs like:
+Doc1: Customers on month-to-month contracts churn more often.
+Doc2: Fiber optic users pay higher monthly charges.
+Doc3: Long tenure customers are less likely to churn.
+Doc4: Electronic check payment correlates with churn.
+Each doc = one chunk.
+________________________________________
+✅ STEP 3 — Generate embeddings (conceptual API flow)
+Every chunk is sent to embedding model:
+input: "Customers on month-to-month contracts churn more often."
+output: [0.012, -0.44, 0.88, ...]
+You now store:
+[
+  { text: "...", vector: [...] },
+  { text: "...", vector: [...] }
+]
+This is your mini vector DB.
+________________________________________
+✅ STEP 4 — Store vectors (simple store)
+You can:
+• Keep in memory
+• JSON file
+• CSV
+• Python dict
+Structure:
+{
+  id: 1,
+  text: "...",
+  embedding: [...]
+}
+________________________________________
+✅ STEP 5 — Query time
+User asks:
+"Which customers are likely to churn?"
+You:
+1️⃣ Embed query
+2️⃣ Compare with all vectors
+3️⃣ Compute similarity
+4️⃣ Sort
+5️⃣ Pick Top-K
+________________________________________
+✅ STEP 6 — Similarity metric
+Use cosine similarity:
+• Range −1 → 1
+• Higher = closer meaning
+________________________________________
+✅ STEP 7 — Top-K experiments
+Try:
+Top-K	Effect
+1	Cheap, risky
+3	Best default
+10	More cost, more noise
+50	🚨 Expensive + junk
+📌 Enterprise default: 3–8
+________________________________________
+✅ STEP 8 — What you just built
+You implemented:
+✔ Retrieval
+✔ Ranking
+✔ Cost control
+✔ Grounding foundation
+✔ RAG core logic
+________________________________________
+
+
+
+
+
+
+
+
+
+🧠 Mini Homework (answer before Lab-5)
+Reply with:
+1️⃣ Why do we embed docs once but queries every time?
+Your answer was mostly right, but here’s the clean enterprise version:
+👉 Docs = stable → embed once → store in vector DB
+👉 Queries = change every request → must embed every time
+Because:
+• Saves cost
+• Faster retrieval
+• Production systems can’t re-embed thousands of docs per query
+📌 Key phrase:
+Documents are static; queries are dynamic
+
+2️⃣ What happens if Top-K is too low?
+Refined:
+• Might miss the relevant chunk
+• Model hallucinates
+• Poor grounding
+Enterprise range stays: 3–8
+
+3️⃣ Why chunk before embedding?
+This one needed fixing 👀 — good you flagged uncertainty.
+Chunking happens BEFORE embedding because:
+✔ Embeddings represent meaning of a single piece of text
+✔ Whole documents are too large
+✔ Retrieval must target specific passages
+✔ Improves precision
+✔ Reduces noise
+✔ Fits context windows later
+So the real pipeline is:
+Documents
+→ Chunk
+→ Embed chunks
+→ Store vectors
+
+4️⃣ Which costs more long-term: embeddings or chat tokens?
+• Embedding cost = one-time per document
+• Chat/completion tokens = every query → forever
+So:
+🔥 LLM inference dominates cost in production, not embeddings.
+
+________________________________________
+When ready we continue with:
+👉 🔵 Lab-5 — RAG Lite (Manual)
+(chunking + overlap + grounding).
+This is where it gets 🔥.
+
+
+### the code you are gonna paste it on python: all you need to attach your api key and endpoint:###
+import os
+from openai import AzureOpenAI
+#Step 1 — Connect to Azure OpenAI
+endpoint = "Your endpoint"
+deployment = "text-embedding-3-small"
+api_key = "Your api key" # Replace with your actual key
+api_version = "2024-02-01"
+
+# Initialize the client correctly
+client = AzureOpenAI(
+    api_version=api_version,
+    azure_endpoint=endpoint,
+    api_key=api_key # Use api_key here for the OpenAI SDK
+)
+#Step 2 — Generate embeddings
+response = client.embeddings.create(
+    input=["Customers on month-to-month contracts churn more often","Fiber optic users pay higher monthly charges","Long tenure customers are less likely to churn"],
+    model=deployment
+)
+
+for item in response.data:
+    length = len(item.embedding)
+    print(
+        f"data[{item.index}]: length={length}, "
+        f"[{item.embedding[0]}, {item.embedding[1]}, "
+        f"..., {item.embedding[length-2]}, {item.embedding[length-1]}]"
+    )
+print(response.usage)
+
+#Step 3 — Inspect vector size 1536  
+#Step 4 — Check token usage Usage(prompt_tokens=25, total_tokens=25) both 3 & 4 will appear as o/p once run the code
+
+#Step 5 - Store vectors in a simple vector store
+import numpy as np
+
+documents = [
+    "Customers on month-to-month contracts churn more often",
+    "Fiber optic users pay higher monthly charges",
+    "Long tenure customers are less likely to churn"
+]
+
+vectors = [item.embedding for item in response.data]
+
+store = {
+    "docs": documents,
+    "vectors": np.array(vectors)
+}
+
+#Step 6 — Embed a query
+#Now simulate a user question:
+query = "Fiber optic user pay lower than DSL servise?"
+
+query_emb = client.embeddings.create(
+    input=query,
+    model=deployment
+).data[0].embedding
+
+#Step 7 — Similarity search (Top-K):
+from sklearn.metrics.pairwise import cosine_similarity
+
+scores = cosine_similarity(
+    [query_emb],
+    store["vectors"]
+)[0]
+
+top_k = 1
+best = scores.argsort()[-top_k:][::-1]
+
+for i in best:
+    print(documents[i], scores[i])
+
+
+#Step 8 — Manual Top-K experiments: Now play : Try top_k = 1 , then 3 , then 5 
+#Observe relevance, bserve noise
+#Did result quality drop?
+#Did irrelevant text appear?
+#How many chunks really useful?
+
+
+#Done ,, Congrats !!
+
+
+
+####Output of the code:
+
+
+[Running] python -u "m:\My roadmap\AZ-AI-102 -Exam\Phase-1\Day-4's code.py"
+data[0]: length=1536, [-0.02365204319357872, 0.031928107142448425, ..., -0.04044800624251366, 0.010083314962685108]
+data[1]: length=1536, [-0.013941646553575993, -0.01904054544866085, ..., -0.013473665341734886, 0.0131872883066535]
+data[2]: length=1536, [-0.0182583536952734, 0.019101696088910103, ..., -0.015011487528681755, -0.00895348098129034]
+Usage(prompt_tokens=25, total_tokens=25)
+Fiber optic users pay higher monthly charges 0.7668978136354963
+Customers on month-to-month contracts churn more often 0.3259808166404879
+Long tenure customers are less likely to churn 0.25787065587351116
+
+[Done] exited with code=0 in 7.401 seconds
 
