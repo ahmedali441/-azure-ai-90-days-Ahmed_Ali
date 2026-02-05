@@ -146,6 +146,163 @@ When you run this:
 • refusal case
 Lab-5 is DONE ✅.
 ________________________________________
+########################################### Here the final code starts #########################################
+
+import os
+from openai import AzureOpenAI
+#Step 1 — Connect to Azure OpenAI
+endpoint = "Your endpoint"
+deployment = "your text embedding choose 'text-embedding-3-small' "
+api_key = "Your api-key" # Replace with your actual key
+api_version = "2024-02-01"
+
+# Initialize the client correctly
+client = AzureOpenAI(
+    api_version=api_version,
+    azure_endpoint=endpoint,
+    api_key=api_key # Use api_key here for the OpenAI SDK
+)
+#Step 2 — Generate embeddings
+response = client.embeddings.create(
+    input=["Customers on month-to-month contracts churn more often","Fiber optic users pay higher monthly charges","Long tenure customers are less likely to churn"],
+    model=deployment
+)
+
+for item in response.data:
+    length = len(item.embedding)
+    print(
+        f"data[{item.index}]: length={length}, "
+        f"[{item.embedding[0]}, {item.embedding[1]}, "
+        f"..., {item.embedding[length-2]}, {item.embedding[length-1]}]"
+    )
+print(response.usage)
+
+#Step 3 — Inspect vector size 1536  
+#Step 4 — Check token usage Usage(prompt_tokens=25, total_tokens=25) both 3 & 4 will appear as o/p once run the code
+
+#Step 5 - Store vectors in a simple vector store
+import numpy as np
+
+documents = [
+    "Customers on month-to-month contracts churn more often",
+    "Fiber optic users pay higher monthly charges",
+    "Long tenure customers are less likely to churn"
+]
+
+vectors = [item.embedding for item in response.data]
+
+store = {
+    "docs": documents,
+    "vectors": np.array(vectors)
+}
+
+#Step 6 — Embed a query
+#Now simulate a user question:
+query = "Fiber optic user pay lower than DSL servise?"
+
+query_emb = client.embeddings.create(
+    input=query,
+    model=deployment
+).data[0].embedding
+
+#Step 7 — Similarity search (Top-K):
+from sklearn.metrics.pairwise import cosine_similarity
+
+scores = cosine_similarity(
+    [query_emb],
+    store["vectors"]
+)[0]
+
+top_k = 1
+best = scores.argsort()[-top_k:][::-1]
+
+for i in best:
+    print(documents[i], scores[i])
+
+
+#Step 8 — Manual Top-K experiments: Now play : Try top_k = 1 , then 3 , then 5 
+#Observe relevance, bserve noise
+#Did result quality drop?
+#Did irrelevant text appear?
+#How many chunks really useful?
+
+#Day's 5 lab starts here:
+
+#step 9 Build Retrieved Context Block
+retrieved_docs = [documents[i] for i in best]
+
+context = "\n".join(
+    f"[Doc {idx+1}] {doc}"
+    for idx, doc in enumerate(retrieved_docs)
+)
+
+print("Retrieved context:\n", context)
+
+#Step-10 — Grounded Prompt Template
+
+system_prompt = """
+You are a churn prediction assistant.
+
+Answer ONLY from the provided context.
+If the answer is not in the context, say: "Information not available in the provided documents."
+
+Always cite sources like [Doc 1].
+"""
+
+user_prompt = f"""
+Context:
+{context}
+
+Question:
+{query}
+"""
+# Step-11 — Call Chat Model with Grounding
+chat_deployment = "your chat deployment choose 'chat 40 mini' "
+
+chat_response = client.chat.completions.create(
+    model=chat_deployment,
+    messages=[
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_prompt},
+    ],
+    temperature=0,
+    max_tokens=200,
+)
+
+print(chat_response.choices[0].message.content)
+print("Usage:", chat_response.usage)
+
+#Step-12 — Citation Enforcement Test
+
+query = "Do customers in Europe churn more?"
+
+#Step-13 — Chunking Simulation
+documents = [
+    "Customers on month-to-month contracts churn more often because they are not locked in...",
+    "Fiber optic users typically pay higher monthly charges compared to DSL...",
+    "Long tenure customers are less likely to churn because loyalty increases..."
+]
+
+#Step-14 — Overlap Concept (Manual)
+documents = [
+    "Customers on month-to-month contracts churn more often. They are free to cancel anytime.",
+    "They are free to cancel anytime and often leave when prices rise.",
+]
+
+#Step-15 — Log Tokens for Cost Awareness, you will see on the o/p:
+#Usage(prompt_tokens=XX, completion_tokens=YY)
+
+
+
+#Done ,, Congrats !!
+
+
+
+
+
+
+
+#################################################################################################################
 Next...
 Start Lab-6 — Security Setup
 and we continue exactly by the plan.
