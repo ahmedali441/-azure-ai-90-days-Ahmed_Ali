@@ -1,1 +1,132 @@
+🔵 Lab 6 — Security Setup
+•	RBAC roles
+•	Managed identity
+•	Disable keys
+•	Private endpoint (conceptual or demo)
+•	Network isolation
+
+
+🔵 Step-1 — RBAC on Azure OpenAI Resource
+In Microsoft Azure Portal:
+➡ Go to:
+Azure OpenAI resource → Access Control (IAM)
+Click Role assignments.
+You should see roles like:
+• Cognitive Services OpenAI User
+• Cognitive Services Contributor
+• Owner / Contributor
+✅ What you want:
+Role	Who
+OpenAI User	apps / services
+Contributor	ML engineers
+Owner	admins only
+📌 NOT recommended: Everyone = Owner.
+________________________________________
+🔵 Step-2 — Managed Identity (Production Auth)
+Instead of API keys, production apps use:
+👉 Managed Identity + RBAC
+Why?
+• no secrets stored
+• auto-rotated
+• tied to Azure resource
+• least privilege
+Later, apps authenticate like:
+App → Managed Identity → Azure OpenAI → RBAC check → Allowed
+________________________________________
+🔎 Quick check:
+Open:
+Azure OpenAI → Keys & Endpoint
+You’ll still see keys — but:
+❗Enterprise systems should NOT rely on them long-term.
+________________________________________
+🔵 Step-3 — Disable Public Network Access
+In Azure OpenAI:
+➡ Networking → Public access
+Options:
+• Enabled
+• Disabled (Private Endpoint only)
+✅ Enterprise choice:
+Disable Public Access
+Meaning:
+✔ only VNet traffic allowed
+✔ internet blocked
+✔ internal workloads only
+________________________________________
+🔵 Step-4 — API Keys Strategy
+Even if keys exist:
+✔ don’t store in code
+✔ avoid in prod
+✔ rotate often
+✔ replace with managed identity
+If used temporarily:
+👉 store in Key Vault, not GitHub.
+________________________________________
+🔵 Step-5 — Network Isolation (Concept Level)
+In regulated environments:
+• Azure OpenAI
+• App Service
+• AKS
+• VM
+All sit in:
+👉 Virtual Network
+👉 Private Endpoint
+👉 Private DNS Zone
+Traffic never leaves Azure backbone.
+________________________________________
+🧠 Architecture:
+App (VNet)
+   |
+Private Endpoint
+   |
+Azure OpenAI
+No public IP. No internet exposure.
+________________________________________
+🔵 Step-6 — Security Checklist (You SHOULD Verify)
+Open your resource and confirm:
+✅ RBAC enabled
+✅ minimal roles
+✅ public access restricted (optional now)
+✅ keys not used in apps
+✅ tags present (env, owner, costcenter)
+✅ diagnostics ready (Lab-7)
+________________________________________
+🎯 MINI-QUIZ (Answer fast 👇)
+1️⃣ Why is Managed Identity better than API keys?
+✔ no secrets in code
+✔ automatic rotation
+✔ RBAC-controlled
+✔ works with private endpoints
+✔ identity tied to workload
+(Private endpoint is network — MI is auth, but they work together.)
+
+2️⃣ Which RBAC role should apps usually have?
+✔ Cognitive Services OpenAI User
+NOT Contributor.
+Contributor = manage deployments/config → engineers only
+
+3️⃣ What happens when public access is disabled?
+✔ only traffic via Private Endpoint
+✔ no public IP access
+✔ internet blocked
+✔ VNet-only connectivity
+(API keys may still exist — but unreachable publicly.)
+
+4️⃣ Where should secrets live temporarily?
+Key Vault.
+
+5️⃣ Why isolate Azure OpenAI inside a VNet?
+✔ regulatory compliance
+✔ data residency
+✔ no internet exposure
+✔ zero-trust architecture
+________________________________________
+🟢 STATUS
+Lab-6 is SECURITY HARDENING COMPLETE ✔
+
+
+
+Next ..
+Lab-7 — Monitoring
+
+
 
