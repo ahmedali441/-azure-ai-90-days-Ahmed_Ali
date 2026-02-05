@@ -1,1 +1,153 @@
+🔵 Lab 5 — RAG Lite (Manual)
+•	Upload docs
+•	Chunking
+•	Overlap
+•	Retrieval
+•	Prompt grounding
+(No Azure AI Search yet — simple version.)
+
+
+Goal:
+Take retrieved chunks → inject into prompt → force grounding → return answer + citation.
+NO Azure AI Search yet.
+NO orchestration frameworks.
+Pure Python + Azure OpenAI.
+
+🧪 What Lab-5 Adds on top of your code
+You already finished Steps 1–8.
+Now we add:
+________________________________________
+🔵 Step-9 — Build Retrieved Context Block
+After your similarity loop:
+retrieved_docs = [documents[i] for i in best]
+
+context = "\n".join(
+    f"[Doc {idx+1}] {doc}"
+    for idx, doc in enumerate(retrieved_docs)
+)
+
+print("Retrieved context:\n", context)
+This simulates what Azure AI Search would later return.
+________________________________________
+________________________________________
+🔵 Step-10 — Grounded Prompt Template
+We now force the model:
+• use ONLY retrieved text
+• refuse if not present
+• cite sources
+Add:
+system_prompt = """
+You are a churn prediction assistant.
+
+Answer ONLY from the provided context.
+If the answer is not in the context, say: "Information not available in the provided documents."
+
+Always cite sources like [Doc 1].
+"""
+
+user_prompt = f"""
+Context:
+{context}
+
+Question:
+{query}
+"""
+________________________________________
+________________________________________
+🔵 Step-11 — Call Chat Model with Grounding
+⚠️ You must already have a chat deployment (GPT-4o / GPT-35 / etc).
+Add:
+chat_deployment = "your-chat-deployment-name"
+
+chat_response = client.chat.completions.create(
+    model=chat_deployment,
+    messages=[
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_prompt},
+    ],
+    temperature=0,
+    max_tokens=200,
+)
+
+print(chat_response.choices[0].message.content)
+print("Usage:", chat_response.usage)
+________________________________________
+________________________________________
+🔵 Step-12 — Citation Enforcement Test
+Change query to something NOT in docs:
+query = "Do customers in Europe churn more?"
+Expected:
+Information not available in the provided documents.
+If it hallucinates → grounding failed ❌.
+________________________________________
+________________________________________
+🔵 Step-13 — Chunking Simulation
+Replace documents with longer paragraphs:
+documents = [
+    "Customers on month-to-month contracts churn more often because they are not locked in...",
+    "Fiber optic users typically pay higher monthly charges compared to DSL...",
+    "Long tenure customers are less likely to churn because loyalty increases..."
+]
+Later we’ll automate chunking — for now you’re seeing why:
+👉 small chunks = precise retrieval
+👉 big chunks = noise + cost
+________________________________________
+________________________________________
+🔵 Step-14 — Overlap Concept (Manual)
+Simulate overlapping chunks:
+documents = [
+    "Customers on month-to-month contracts churn more often. They are free to cancel anytime.",
+    "They are free to cancel anytime and often leave when prices rise.",
+]
+Notice retrieval improves because overlapping info appears twice.
+________________________________________
+________________________________________
+🔵 Step-15 — Log Tokens for Cost Awareness
+You already printed:
+Usage(prompt_tokens=XX, completion_tokens=YY)
+Write in notebook:
+• context size ↑ → tokens ↑
+• Top-K ↑ → cost ↑
+• chunk size ↑ → cost ↑
+________________________________________
+________________________________________
+✅ What You Have Now Implemented
+You just built:
+✔ Retrieval
+✔ Vector similarity
+✔ Grounding
+✔ Citation forcing
+✔ Hallucination prevention
+✔ Cost trade-offs
+✔ Chunking intuition
+✔ Overlap effect
+This is core RAG.
+________________________________________
+________________________________________
+🧠 Why this matters for later
+When we move to:
+👉 Azure AI Search
+👉 hybrid search
+👉 HNSW
+👉 filters
+👉 reranker
+ALL of that replaces:
+store["vectors"]
+cosine_similarity()
+—but the logic stays identical.
+________________________________________
+________________________________________
+🛑 Stop Point for Today
+When you run this:
+• query
+• retrieval
+• grounded answer
+• citations
+• refusal case
+Lab-5 is DONE ✅.
+________________________________________
+Next...
+Start Lab-6 — Security Setup
+and we continue exactly by the plan.
+
 
