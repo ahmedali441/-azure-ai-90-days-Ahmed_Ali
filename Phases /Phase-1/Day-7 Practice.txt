@@ -1,1 +1,111 @@
+🔵 Lab 7 — Monitoring
+•	Enable diagnostics
+•	Send logs to Log Analytics
+•	Token metrics
+•	Latency
+•	Errors
+
+
+
+🔵 Step 1 — Open Metrics
+Go to:
+Azure Portal → Azure OpenAI resource → Monitoring → Metrics
+You are now inside Microsoft Azure Monitor.
+________________________________________
+➕ Add These Metrics:
+Click Add metric and choose:
+Metric	Why
+Tokens In	Prompt size
+Tokens Out	Completion cost
+Total Tokens	Billing driver
+Requests	Traffic
+Latency	Performance
+Errors	Failures
+________________________________________
+📌 Scope = deployment
+So you can compare:
+👉 chat model vs embedding model
+________________________________________
+🔵 Step 2 — View Token Cost Drivers
+Switch aggregation:
+• Sum → total tokens
+• Avg → typical call size
+Ask yourself:
+✔ which deployment burns more tokens?
+✔ spikes at certain times?
+✔ sudden jumps?
+________________________________________
+________________________________________
+🔵 Step 3 — Enable Diagnostic Logs
+Now go to:
+Monitoring → Diagnostic settings → Add diagnostic setting
+________________________________________
+Enable:
+✔ AuditLogs
+✔ RequestResponseLogs (if available)
+✔ Metrics
+________________________________________
+Send to:
+👉 Log Analytics Workspace
+(if none → create new)
+Name example:
+openai-monitoring-law
+________________________________________
+________________________________________
+🔵 Step 4 — Query Logs
+Open:
+Log Analytics → Logs
+Run:
+AzureMetrics
+| where ResourceProvider == "MICROSOFT.COGNITIVESERVICES"
+| project TimeGenerated, MetricName, Total
+| order by TimeGenerated desc
+________________________________________
+For errors:
+AzureActivity
+| where ActivityStatusValue == "Failed"
+________________________________________
+________________________________________
+🔵 Step 5 — Alerts (VERY Important)
+Go to:
+Monitoring → Alerts → Create alert rule
+________________________________________
+Signal:
+Metric → Total Tokens
+________________________________________
+Condition:
+Example:
+Total Tokens > 50000 in 1 hour
+________________________________________
+Action group:
+✔ email
+✔ SMS
+✔ webhook
+Name:
+openai-cost-alert
+________________________________________
+________________________________________
+🔵 Step 6 — Dashboards
+Create a simple dashboard with:
+• Tokens over time
+• Requests
+• Latency
+• Errors
+This is what SRE teams watch 👀
+________________________________________
+________________________________________
+🧠 Mini-Check (Answer mentally)
+1️⃣ Which metric correlates MOST with cost?
+➡ Total Tokens
+2️⃣ What reveals slow apps?
+➡ Latency
+3️⃣ What detects runaway loops?
+➡ Request count + tokens
+4️⃣ Why logs matter for enterprises?
+➡ audit / security / compliance / investigations
+________________________________________
+Next..
+Start Lab-8 — Responsible AI Controls
+😎
+
 
