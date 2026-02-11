@@ -1,1 +1,685 @@
+🧠 Phase-2 — Azure AI Services
+👉 Theory → then Portal Labs → then Mini Projects
+We’ll follow the same pattern you liked in Phase-1:
+1️⃣ Deep theory first
+2️⃣ Portal labs
+3️⃣ Realistic mini-projects
+4️⃣ Cost + security + monitoring included
+5️⃣ Notebook + GitHub documentation
+________________________________________
+🔵 What are Azure AI Services?
+Azure AI Services are pre-trained APIs for perception and language tasks:
+Category	What it does	Used for
+Vision	Image analysis, OCR, faces, layout	invoices, photos, scanning
+Language	NER, sentiment, summarization	CRM, tickets
+Speech	STT / TTS / translation	call centers
+Document Intelligence	Form extraction	invoices, receipts
+Translator	Multilingual text	global apps
+📌 Key difference vs Azure ML:
+•	Azure AI Services = ready-to-use models
+•	Azure ML = you train models
+________________________________________
+🧩 Phase-2 Topic Map (Complete)
+We will cover everything that matters for AZ-102:
+________________________________________
+👁️ 1) Vision + OCR
+Capabilities:
+• Image captioning
+• Object detection
+• Tags
+• Background removal
+• OCR
+• Document layout
+• Tables
+• Handwriting
+Used for:
+•	invoice scanning
+•	ID cards
+•	passport OCR
+•	receipts
+•	medical forms
+________________________________________
+🧠 2) Language Services
+Includes:
+• Named Entity Recognition (NER)
+• Sentiment analysis
+• Key phrases
+• PII detection
+• Summarization
+• Classification
+________________________________________
+🎙️ 3) Speech Services
+Includes:
+• Speech → Text
+• Text → Speech
+• Voice styles
+• Speaker recognition
+• Translation
+________________________________________
+📄 4) Document Intelligence (Forms)
+Extract:
+• vendor name
+• totals
+• line items
+• dates
+• tables
+• signatures
+Enterprise gold.
+________________________________________
+🌍 5) Translator
+• Text translation
+• language detection
+________________________________________
+🔐 6) Security + Networking
+For ALL services:
+• RBAC
+• Managed identity
+• Private endpoints
+• Disable keys
+• VNet integration
+• logging
+________________________________________
+💸 7) Cost Controls
+• per-call pricing
+• page count pricing
+• OCR cost per page
+• budgets
+• metrics
+• throttling
+• batching
+________________________________________
+📊 8) Monitoring
+• latency
+• error rates
+• request volume
+• throttles
+• diagnostic logs
+________________________________________
+________________________________________
+🧪 Phase-2 Portal Labs (We’ll Do These)
+Once theory is locked:
+________________________________________
+🔵 Lab-1 — Create Azure AI Services Resource
+• region choice
+• pricing tier
+• RBAC
+• disable public access
+• quotas
+________________________________________
+🔵 Lab-2 — Vision & OCR Portal Demo
+• upload images
+• invoices
+• handwriting
+• layout detection
+________________________________________
+🔵 Lab-3 — NER + Sentiment
+• call Language Studio
+• analyze CRM text
+• detect PII
+________________________________________
+🔵 Lab-4 — Speech Studio
+• microphone transcription
+• TTS
+• translation
+________________________________________
+🔵 Lab-5 — Document Intelligence
+• invoices
+• receipts
+• tables
+________________________________________
+🔵 Lab-6 — Secure the services
+• private endpoints
+• managed identity
+• logging
+________________________________________
+🔵 Lab-7 — Mini Project
+🎯 Enterprise Demo App:
+Upload invoice → OCR → extract entities → store → speak result aloud.
+________________________________________
+________________________________________
+🧭 How Phase-2 Fits in the Big Picture
+You now have:
+✔ Phase-1 → GenAI / RAG
+⬅ Phase-2 → Perception AI
+➡ Phase-3 → Azure AI Search
+➡ Phase-4 → Azure ML
+➡ Phase-5 → Governance / Cost / Responsible AI
+________________________________________
+________________________________________
+🚀 Today: Where We Start
+We start theory-only:
+👉 Vision + OCR fundamentals
+👉 service structure
+👉 pricing models
+👉 when to use Vision vs Document Intelligence
+👉 latency patterns
+👉 batching
+👉 image preprocessing
+👉 security boundaries
+
+
+👁️ Vision + OCR — Phase-2 Theory
+This lives inside Azure AI Services and is used when:
+📸 Input = image / scanned document / photo / camera feed
+🧾 Output = text, layout, objects, meaning
+________________________________________
+🧠 Two Families You MUST Separate:
+Azure splits visual AI into:
+________________________________________
+🔵 A) Vision Models (General Images)
+Used for:
+• image captioning
+• tags
+• object detection
+• background removal
+• people detection
+• OCR in photos
+• handwriting
+Think:
+👉 photos
+👉 street signs
+👉 whiteboards
+👉 screenshots
+👉 product images
+________________________________________
+🟣 B) Document Intelligence (Structured Docs)
+Used for:
+• invoices
+• receipts
+• forms
+• contracts
+• tables
+• line items
+• totals
+• key-value pairs
+Think:
+👉 PDFs
+👉 scans
+👉 enterprise paperwork
+________________________________________
+⚠️ EXAM RULE:
+Photo / scene → Vision
+Business document → Document Intelligence
+________________________________________
+🔍 What is OCR Exactly?
+OCR = Optical Character Recognition
+It converts:
+🖼️ image → 🔤 text + layout + bounding boxes
+________________________________________
+High-Value OCR Examples
+________________________________________
+OCR outputs:
+• detected text
+• line structure
+• coordinates
+• reading order
+• handwriting vs printed
+• confidence scores
+________________________________________
+🧾 Vision OCR vs Document OCR
+Feature	Vision OCR	Document Intelligence
+Scene text	✅	⚠️ limited
+Handwriting	✅	✅
+Tables	❌	✅
+Key-value pairs	❌	✅
+Invoices	❌	✅
+Receipts	❌	✅
+Contracts	❌	✅
+________________________________________
+🎯 Enterprise Decision Tree
+Ask these:
+❓ Is it a business form?
+→ Document Intelligence
+❓ Is it a photo?
+→ Vision OCR
+❓ Need totals, vendor names, rows?
+→ Document Intelligence
+❓ Just want text from sign or board?
+→ Vision OCR
+________________________________________
+🧩 Vision Capabilities (Non-OCR)
+Vision APIs can:
+• describe image
+• detect objects
+• generate tags
+• identify people
+• blur background
+• crop subject
+• detect brands
+Enterprise uses:
+🏭 factory camera QA
+🛒 product cataloging
+📷 security review
+🖥️ screenshot analysis
+________________________________________
+📄 Document Intelligence Deep Value
+This is automation gold.
+It extracts:
+• Invoice Number
+• Vendor Name
+• Total
+• Tax
+• Date
+• Line Items
+• Currency
+• Table rows
+Without training in many cases (prebuilt models).
+________________________________________
+💸 Pricing Logic (Important)
+Vision & OCR pricing is usually:
+• per image
+• per page
+• per document
+NOT per token like GenAI.
+📌 Exam trap: OCR ≠ token billing.
+________________________________________
+🔐 Security Boundaries (Phase-2 Preview)
+All Vision/OCR services support:
+• RBAC
+• Managed Identity
+• Private Endpoint
+• Disable keys
+• Diagnostic logs
+Same enterprise rules as Azure OpenAI.
+________________________________________
+🏗️ Typical Architecture Pattern
+App / Scanner
+     |
+     v
+API Gateway
+     |
+     v
+Vision OR Document Intelligence
+     |
+     v
+Storage / DB / ERP
+Often paired with:
+➡️ Azure OpenAI for summarization
+➡️ Search for indexing
+➡️ ML for retraining
+________________________________________
+⚠️ Common Exam Traps
+❌ Using Vision OCR for invoices
+❌ Using GenAI for form extraction
+❌ Forgetting Document Intelligence exists
+❌ Saying OCR is trained via Azure ML
+❌ Mixing token pricing with page pricing
+________________________________________
+🧠 Rapid-Fire Check (Answer mentally):
+1️⃣ Which service for receipts? 
+Document Intelligence
+
+2️⃣ Which for street photos?
+ Vision (Image Analysis)
+
+3️⃣ Which extracts tables? 
+Document Intelligence
+
+4️⃣ Which is cheaper for 1,000 PDFs vs LLM?
+ Document Intelligence is billed per page, LLM per tokens.
+
+5️⃣ Which supports handwriting best? 
+Document Intelligence (Read model) handles handwriting best.
+
+
+
+
+Now we move to Language Services inside Azure AI Services from Microsoft.
+This phase covers non-generative NLP — classic enterprise text analysis:
+📄 Input = text
+📊 Output = labels, entities, sentiment, categories, redaction
+NOT chatting.
+NOT RAG.
+NOT embeddings.
+These are deterministic, cheap, fast, production workhorses.
+________________________________________
+🧠 Azure Language Services — Phase-2 Theory
+________________________________________
+🔵 What Falls Under “Language”?
+Azure’s Language service includes:
+• Named Entity Recognition (NER)
+• PII detection & redaction
+• Sentiment analysis
+• Opinion mining
+• Key phrase extraction
+• Text classification
+• Custom classification
+• Custom NER
+• Summarization
+• Healthcare entities
+________________________________________
+📦 Big Picture Categories
+There are three tiers:
+________________________________________
+🟢 Tier 1 — Prebuilt Analysis (no training)
+Plug & play APIs:
+• sentiment
+• key phrases
+• NER
+• PII
+• summarization
+Used when:
+👉 customer feedback
+👉 tickets
+👉 emails
+👉 chat logs
+👉 reviews
+________________________________________
+🟡 Tier 2 — Custom Models (you train)
+You label data to teach:
+• custom categories
+• custom entity types
+Example:
+👉 classify emails into HR / IT / Finance
+👉 detect internal product names
+👉 detect contract IDs
+________________________________________
+🔴 Tier 3 — Domain-specific
+Healthcare NLP:
+• symptoms
+• medications
+• diagnoses
+• procedures
+________________________________________
+🧩 Core Capabilities Explained
+________________________________________
+📍 1) Named Entity Recognition (NER)
+Extracts real-world objects:
+• person
+• org
+• location
+• date
+• money
+• product
+Example:
+“Ahmed paid $400 in Doha.”
+→ Person = Ahmed
+→ Money = 400
+→ Location = Doha
+________________________________________
+________________________________________
+🔐 2) PII Detection
+Finds sensitive data:
+• phone numbers
+• email
+• credit cards
+• national IDs
+• IBAN
+• addresses
+Can:
+✔️ detect
+✔️ mask
+✔️ redact
+Used for:
+🏦 compliance
+📞 call-center logs
+📄 documents before indexing
+________________________________________
+________________________________________
+😊 3) Sentiment + Opinion Mining
+Sentiment:
+• positive
+• neutral
+• negative
+Opinion mining links:
+feature → sentiment
+“The price is high but the service is good.”
+→ price = negative
+→ service = positive
+Very exam-friendly.
+________________________________________
+________________________________________
+🏷️ 4) Key Phrase Extraction
+Pulls main topics:
+• “refund delay”
+• “login problem”
+• “billing error”
+Used for dashboards & clustering.
+________________________________________
+________________________________________
+📚 5) Text Classification
+Assign labels:
+• complaint
+• praise
+• technical issue
+• billing
+Two types:
+🔵 Multi-class
+(one label only)
+🟣 Multi-label
+(many allowed)
+________________________________________
+________________________________________
+✍️ 6) Custom NER
+You define:
+• invoice_id
+• product_code
+• contract_number
+Train using labeled text.
+________________________________________
+________________________________________
+📉 7) Summarization
+Two styles:
+• extractive → picks original sentences
+• abstractive → rewrites
+Azure Language mostly focuses on extractive.
+________________________________________
+________________________________________
+🏥 Healthcare Text Analytics
+Special models detect:
+• medications
+• dosage
+• symptoms
+• ICD codes
+HIPAA-friendly scenarios.
+________________________________________
+💸 Pricing Model (Important!)
+Language services are billed:
+👉 per 1,000 text records
+👉 or per 1,000 characters
+NOT tokens.
+📌 Exam trap:
+Only GenAI uses token pricing.
+________________________________________
+🔐 Enterprise Security
+Same Azure patterns:
+• RBAC
+• Managed identity
+• Private endpoints
+• Disable keys
+• Diagnostic logs
+________________________________________
+🏗️ Architecture Pattern
+App / CRM / Ticket System
+          |
+          v
+Language Service API
+          |
+          v
+Database / BI / Search
+Often combined with:
+➡️ Azure OpenAI for generation
+➡️ Search for indexing
+➡️ ML for retraining custom models
+________________________________________
+⚠️ Common Exam Traps
+❌ Using GPT for PII detection
+❌ Saying NER needs Azure ML
+❌ Confusing summarization types
+❌ Token billing
+❌ Forgetting Custom models exist
+________________________________________
+🧠 Rapid-Fire Check (don’t answer yet 😏)
+1️⃣ Which service detects credit cards? 
+PII Detection
+
+2️⃣ Which extracts organizations? 
+Named Entity Recognition (NER)
+
+3️⃣ Which assigns email categories?
+ Text Classification
+
+4️⃣ Which requires labeling? 
+Custom Classification / Custom NER
+
+5️⃣ Which pricing model applies?
+ per record / per character not tokens
+
+
+
+🎙️ Azure Speech Services — Theory
+This is a big enterprise pillar.
+Used for:
+• Call centers
+• Voice bots
+• Transcription
+• Meeting summaries
+• Real-time translation
+• IVR systems
+________________________________________
+🧠 What Is Speech Service?
+It converts between:
+Speech ⇄ Text ⇄ Speech
+Plus:
+• Speaker identification
+• Language detection
+• Translation
+• Voice synthesis
+________________________________________
+📦 Core Capabilities
+________________________________________
+🔵 1) Speech-to-Text (STT)
+Converts audio → text.
+Supports:
+• real-time streaming
+• batch transcription
+• multiple languages
+• punctuation
+• profanity filtering
+Enterprise uses:
+📞 call center logs
+📼 meeting transcription
+🎙️ voice assistants
+________________________________________
+🟢 2) Text-to-Speech (TTS)
+Converts text → natural voice.
+Supports:
+• neural voices
+• multiple languages
+• emotional tone
+• SSML control
+Used for:
+🤖 chatbots
+📱 mobile apps
+📢 IVR systems
+________________________________________
+🟣 3) Speech Translation
+Real-time:
+English speech → Arabic text
+French speech → English speech
+Used in:
+🌍 live meetings
+🎧 international support
+________________________________________
+🟡 4) Speaker Diarization
+Separates speakers in audio:
+Speaker 1
+Speaker 2
+Very important for:
+📞 contact centers
+⚖️ legal recordings
+🧑‍⚕️ medical notes
+________________________________________
+🔴 5) Custom Speech
+You can train:
+• custom acoustic models
+• custom vocabulary
+• domain terminology
+Example:
+Medical system learns:
+“angioplasty”
+“myocardial infarction”
+________________________________________
+💸 Pricing Model
+Speech pricing depends on:
+• minutes of audio processed
+• real-time vs batch
+• neural voice generation time
+NOT tokens.
+NOT per document.
+________________________________________
+🔐 Security
+Same Azure enterprise model:
+• RBAC
+• Managed identity
+• Private endpoints
+• Disable keys
+• Log audio usage
+________________________________________
+🏗️ Architecture Pattern (Call Center Example)
+Phone Call
+   ↓
+Speech-to-Text
+   ↓
+Language Service (Sentiment + PII)
+   ↓
+Database
+   ↓
+Dashboard / CRM
+OR
+Voice Bot
+   ↓
+Speech-to-Text
+   ↓
+Azure OpenAI
+   ↓
+Text-to-Speech
+   ↓
+User
+________________________________________
+⚠️ Common Exam Traps
+❌ Saying OpenAI does speech
+❌ Saying Speech pricing uses tokens
+❌ Confusing diarization with translation
+❌ Forgetting batch transcription exists
+________________________________________
+🧠 Rapid-Fire Check
+Answer mentally:
+1️⃣ Which service separates speakers? 
+Speaker diarization
+
+2️⃣ Which converts text into Arabic speech?
+ Text-to-Speech (TTS)
+
+3️⃣ Which pricing model applies?
+ Based on:
+•	Minutes of audio processed
+•	Real-time vs batch
+•	Neural voice generation
+
+4️⃣ Which feature helps detect who said what?
+•	Speaker Diarization → separates speakers in one recording (Speaker 1, Speaker 2)
+•	Speaker Identification → matches voice to a known person (e.g., “Ahmed”)
+For meetings → usually Diarization.
+
+5️⃣ Which service transcribes meetings?
+
+Speech-to-Text (STT)
+________________________________________
+________________________________________
+📍 Phase-2 Status
+You’ve now covered theory for:
+✔ Vision
+✔ OCR
+✔ Document Intelligence
+✔ Language Services
+✔ Speech Services
+
+Next:
+👉 We begin Portal Practical Labs for Phase-2
+We will start with:
+🔵 Vision + OCR lab
+🟢 Language lab
+🟣 Speech lab
+
 
